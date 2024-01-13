@@ -27,6 +27,15 @@ const loadJsx = async (jsxFolder) =>{
 	})
 }
 
+//なぜかWin環境下だと`$.evalFileメソッドが動かない
+const initExtendScript = async () => {
+	const commonFolder = path.join(hostData.extensionRoot, "jsx" ,"common");
+	const indesign = path.join(hostData.extensionRoot, "jsx" ,"indesign");
+	await Promise.all([commonFolder, indesign].map(async (folder) => {
+        await loadJsx(folder);
+    }));
+}
+
 class ExtensionData {
 	constructor () {
 		const hostInfo = csInterface.getHostEnvironment();
@@ -74,12 +83,7 @@ const registerEvent = () => {
 (async () => {
 	themeManager.init();
 	preventDragEvent();
-	console.log(hostData.extensionRoot);
-	const commonFolder = path.join(hostData.extensionRoot, "jsx" ,"common");
-	const indesign = path.join(hostData.extensionRoot, "jsx" ,"indesign");
-	await Promise.all([commonFolder, indesign].map(async (folder) => {
-        await loadJsx(folder);
-    }));
+	// initExtendScript Win環境下で動かないのでひとつのJSXにまとめた
 	registerEvent();
 	await detectDocumentChange();
 })();
