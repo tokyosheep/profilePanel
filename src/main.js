@@ -17,13 +17,19 @@ const preventDragEvent = () =>{
 const loadJsx = async (jsxFolder) =>{
     const parts = await fs.promises.readdir(jsxFolder);
     const jsxes = parts.filter(f => path.extname(f) === ".jsx" || path.extname(f) === ".js");
-    jsxes.forEach(jsx =>  csInterface.evalScript(`$.evalFile("${jsxFolder}/${jsx}")`));
+    jsxes.forEach(jsx =>  {
+		try {
+			console.log(path.join(jsxFolder,jsx));
+			csInterface.evalScript(`$.evalFile("${path.join(jsxFolder,jsx)}")`);
+		} catch (e) {
+			console.log(e);
+		}
+	})
 }
 
 class ExtensionData {
 	constructor () {
 		const hostInfo = csInterface.getHostEnvironment();
-		console.log(hostInfo);
 		this.extensionId = csInterface.getExtensionID();
 		this.appName = hostInfo.appName;
 		this.appVer = hostInfo.appVersion;
@@ -37,7 +43,8 @@ const hostData = new ExtensionData();
 
 const callHostScript = () => {
 	return new Promise((resolve) => {
-	  csInterface.evalScript(`hostScript()`, (o) => {
+	  csInterface.evalScript("hostScript()", (o) => {
+		console.log(o);
 		const json = JSON.parse(o);
 		resolve(json);
 	  });
@@ -59,9 +66,6 @@ const detectDocumentChange = async () => {
 }
 
 const registerEvent = () => {
-	csInterface.addEventListener("documentEdited",(e)=>{
-        console.log(e);
-	});
 	csInterface.addEventListener("documentAfterActivate", detectDocumentChange);
 	csInterface.addEventListener("documentAfterSave", detectDocumentChange);
 	document.getElementById("load_profile").addEventListener("click",  detectDocumentChange);
@@ -70,8 +74,10 @@ const registerEvent = () => {
 (async () => {
 	themeManager.init();
 	preventDragEvent();
+	console.log(hostData.extensionRoot);
 	const commonFolder = path.join(hostData.extensionRoot, "jsx" ,"common");
-	await Promise.all([commonFolder].map(async (folder) => {
+	const indesign = path.join(hostData.extensionRoot, "jsx" ,"indesign");
+	await Promise.all([commonFolder, indesign].map(async (folder) => {
         await loadJsx(folder);
     }));
 	registerEvent();
