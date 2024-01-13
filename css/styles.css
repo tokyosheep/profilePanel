@@ -1,0 +1,61 @@
+/*Your styles*/
+
+
+
+
+
+/*
+Those classes will be edited at runtime with values specified
+by the settings of the CC application
+*/
+.hostFontColor{}
+.hostFontFamily{}
+.hostFontSize{}
+
+/*font family, color and size*/
+.hostFont{}
+/*background color*/
+.hostBgd{}
+/*lighter background color*/
+.hostBgdLight{}
+/*darker background color*/
+.hostBgdDark{}
+/*background color and font*/
+.hostElt{}
+
+
+.hostButton{
+    border:1px solid;
+    border-radius:2px;
+    height:20px;
+    vertical-align:bottom;
+    font-family:inherit;
+    color:inherit;
+    font-size:inherit;
+}
+
+#content {
+    padding: 5px;
+}
+
+.content_title {
+    padding: 5px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.content_row{
+    height: 30px;
+    color: #fff;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.content_row > span {
+    font-size: 14px;
+}
+
+.content_row > p {
+    font-size: 10px;
+}
