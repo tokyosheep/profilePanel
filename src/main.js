@@ -14,6 +14,7 @@ const preventDragEvent = () =>{
     }
 };
 
+//事前にExtendScriptを読み込む関数だがWin環境下での不具合のため現状使用してない。
 const loadJsx = async (jsxFolder) =>{
     const parts = await fs.promises.readdir(jsxFolder);
     const jsxes = parts.filter(f => path.extname(f) === ".jsx" || path.extname(f) === ".js");
@@ -29,7 +30,7 @@ const loadJsx = async (jsxFolder) =>{
 
 //なぜかWin環境下だと`$.evalFileメソッドが動かない
 const initExtendScript = async () => {
-	//node.jsでは読み込めるのでパスの問題ではなさそう。
+	//node.jsではjsxフォルダーパスを読み込めるのでパスの問題ではなさそう。
 	console.log(await fs.promises.readdir(path.join(hostData.extensionRoot, "jsx" ,"common")));
 	const commonFolder = path.join(hostData.extensionRoot, "jsx" ,"common");
 	const indesign = path.join(hostData.extensionRoot, "jsx" ,"indesign");
