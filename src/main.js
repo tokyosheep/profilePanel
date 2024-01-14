@@ -29,6 +29,8 @@ const loadJsx = async (jsxFolder) =>{
 
 //なぜかWin環境下だと`$.evalFileメソッドが動かない
 const initExtendScript = async () => {
+	//node.jsでは読み込めるのでパスの問題ではなさそう。
+	console.log(await fs.promises.readdir(path.join(hostData.extensionRoot, "jsx" ,"common")));
 	const commonFolder = path.join(hostData.extensionRoot, "jsx" ,"common");
 	const indesign = path.join(hostData.extensionRoot, "jsx" ,"indesign");
 	await Promise.all([commonFolder, indesign].map(async (folder) => {

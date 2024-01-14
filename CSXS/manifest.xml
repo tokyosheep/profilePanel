@@ -69,7 +69,7 @@
 					<Menu>profilePanel</Menu>
 					<Geometry>
 						<Size>
-							<Height>90</Height>
+							<Height>100</Height>
 							<Width>200</Width>
 						</Size>
                     	<MinSize>
