@@ -8,20 +8,30 @@
 </head>
 
 <body class="hostElt">
-
-    <div id="content"> 
-        <div class="content_title">
-            <span id="doc_name"></span>
-            <button class="hostButton" id="load_profile">load profile</button>
-        </div>       
-        
-        <div class="content_row" id="rgb">
-            <span>RGB</span>
-            <p id="rgb_data">something....</p>
+    <div class="content_title">
+        <span id="doc_name"></span>
+        <button class="hostButton" id="load_profile">load profile</button>
+    </div>    
+    <div id="content">    
+        <div class="content_row">
+            <div class="colorWrapper" id="rgb">
+                <span>RGB</span>
+                <p id="rgb_data">something....</p>
+            </div>
+            <div class="colorWrapper" id="cmky">
+                <span>CMYK</span>
+                <p id="cmyk_data">something.....</p>
+            </div>
         </div>
-        <div class="content_row" id="cmky">
-            <span>CMYK</span>
-            <p id="cmyk_data">something.....</p>
+        <div class="content_row">
+            <div class="colorWrapper" id="working_rgb">
+                <span>作業用 RGB</span>
+                <p id="working_rgb_data">something....</p>
+            </div>
+            <div class="colorWrapper" id="working_cmky">
+                <span>作業用 CMYK</span>
+                <p id="working_cmyk_data">something.....</p>
+            </div>
         </div>
     </div>
     

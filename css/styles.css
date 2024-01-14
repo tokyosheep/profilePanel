@@ -36,6 +36,8 @@ by the settings of the CC application
 
 #content {
     padding: 5px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .content_title {
@@ -50,6 +52,7 @@ by the settings of the CC application
     color: #fff;
     padding: 5px;
     box-sizing: border-box;
+    width: 45%;
 }
 
 .content_row > span {

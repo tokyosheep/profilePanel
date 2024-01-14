@@ -20,10 +20,10 @@ const loadJsx = async (jsxFolder) =>{
     const jsxes = parts.filter(f => path.extname(f) === ".jsx" || path.extname(f) === ".js");
     jsxes.forEach(jsx =>  {
 		try {
-			console.log(path.join(jsxFolder,jsx));
+			// console.log(path.join(jsxFolder,jsx));
 			csInterface.evalScript(`$.evalFile("${path.join(jsxFolder,jsx)}")`);
 		} catch (e) {
-			console.log(e);
+			// console.log(e);
 		}
 	})
 }
@@ -56,7 +56,6 @@ const hostData = new ExtensionData();
 const callHostScript = () => {
 	return new Promise((resolve) => {
 	  csInterface.evalScript("hostScript()", (o) => {
-		console.log(o);
 		const json = JSON.parse(o);
 		resolve(json);
 	  });
@@ -65,11 +64,14 @@ const callHostScript = () => {
 
 const detectDocumentChange = async () => {
 	const result = await callHostScript();
-	console.log(result);
+	// console.log(result);
 	if (result.status === "success") {
 		document.getElementById("rgb_data").textContent = result.rgb;
 		document.getElementById("cmyk_data").textContent = result.cmyk;
 		document.getElementById("doc_name").textContent = result.name;
+		document.getElementById("working_cmyk_data").textContent = result.currentWorkingCMYK;
+		document.getElementById("working_rgb_data").textContent = result.currentWorkinRGB;
+
 	} else {
 		document.getElementById("rgb_data").textContent = "none";
 		document.getElementById("cmyk_data").textContent = "none";

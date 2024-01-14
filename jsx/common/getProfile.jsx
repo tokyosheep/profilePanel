@@ -5,6 +5,8 @@ function getProfile () {
 	return {
 		cmyk: doc.cmykProfile,
 		rgb: doc.rgbProfile,
+        currentWorkinRGB: app.colorSettings.workingSpaceRGB,
+        currentWorkingCMYK: app.colorSettings.workingSpaceCMYK,
         name: app.activeDocument.name,
         status: "success"
 	}
