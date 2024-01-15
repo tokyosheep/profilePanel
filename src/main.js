@@ -62,25 +62,64 @@ const callHostScript = () => {
 	});
 }
 
+const isSameColorProfile = (
+	cmykData,
+	workingCmyk,
+	rgbData,
+	workingRgb
+) => {
+	console.log(cmykData, workingCmyk);
+	console.log(cmykData === workingCmyk);
+	Array.from(document.getElementsByClassName("cmykdata")).forEach(dom => {
+		if (cmykData === workingCmyk){
+			dom.classList.remove("profileError");
+		} else {
+			dom.classList.add("profileError");
+		}
+	});
+
+	Array.from(document.getElementsByClassName("rgbdata")).forEach(dom => {
+		if (rgbData === workingRgb) {
+			dom.classList.remove("profileError");
+		} else {
+			dom.classList.add("profileError");
+		}
+	})
+}
+
 const detectDocumentChange = async () => {
 	const result = await callHostScript();
-	// console.log(result);
-	if (result.status === "success") {
+	console.log(result);
+	if (result.status === "failed") {
+		document.getElementById("rgb_data").textContent = "Error";
+		document.getElementById("cmyk_data").textContent = "Error";
+		document.getElementById("doc_name").textContent = "Error";
+		return;
+	}
+	if (result.name !== null) {
 		document.getElementById("rgb_data").textContent = result.rgb;
 		document.getElementById("cmyk_data").textContent = result.cmyk;
 		document.getElementById("doc_name").textContent = result.name;
 		document.getElementById("working_cmyk_data").textContent = result.currentWorkingCMYK;
-		document.getElementById("working_rgb_data").textContent = result.currentWorkinRGB;
-
+		document.getElementById("working_rgb_data").textContent = result.currentWorkingRGB;
+		isSameColorProfile(
+			result.cmyk,
+			result.currentWorkingCMYK,
+			result.rgb,
+			result.currentWorkingRGB
+		)
 	} else {
+		document.getElementById("working_cmyk_data").textContent = result.currentWorkingCMYK;
+		document.getElementById("working_rgb_data").textContent = result.currentWorkingRGB;
 		document.getElementById("rgb_data").textContent = "none";
 		document.getElementById("cmyk_data").textContent = "none";
-		document.getElementById("doc_name").textContent = "";
+		document.getElementById("doc_name").textContent = "none";
 	}
 }
 
 const registerEvent = () => {
 	csInterface.addEventListener("documentAfterActivate", detectDocumentChange);
+	csInterface.addEventListener("documentAfterDeactivate", detectDocumentChange);
 	csInterface.addEventListener("documentAfterSave", detectDocumentChange);
 	document.getElementById("load_profile").addEventListener("click",  detectDocumentChange);
 }

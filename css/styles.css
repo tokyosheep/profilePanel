@@ -62,3 +62,7 @@ by the settings of the CC application
 .content_row > p {
     font-size: 10px;
 }
+
+.profileError {
+    border-bottom: solid 1px #f00;
+}
